@@ -3,29 +3,52 @@ import AWork from './AWork.astro'
 
 const projects = [
   {
-    caption: 'Stuart – AI Tutor',
-    site: 'https://github.com/sabithh',
+    caption: 'Bakery AI Manager',
+    description: 'Bakery operations app with stock planning, production flow, and management tools.',
+    site: 'https://github.com/sabithh/bakery_ai_manager',
     src: '/images/project-1.png',
   },
   {
-    caption: 'HMMMM – Mood & Focus',
-    site: 'https://github.com/sabithh',
+    caption: 'ResQ Mini',
+    description: 'Disaster-response focused project with emergency flow and rapid coordination features.',
+    site: 'https://github.com/sabithh/resq_mini',
     src: '/images/project-2.png',
   },
   {
-    caption: 'ResQ Systems',
-    site: 'https://github.com/sabithh',
+    caption: 'Toolsy',
+    description: 'Utility toolkit project that combines practical helpers into one focused experience.',
+    site: 'https://github.com/sabithh/Toolsy',
     src: '/images/project-3.png',
   },
   {
-    caption: 'Budge – Expense Tracker',
-    site: 'https://github.com/sabithh',
+    caption: 'Smart Resume Ranker',
+    description: 'Resume ranking system designed to compare candidate profiles against role needs.',
+    site: 'https://github.com/sabithh/SmartResumeRanker',
     src: '/images/project-4.png',
   },
   {
-    caption: 'Simple Reminder App',
-    site: 'https://github.com/sabithh',
+    caption: 'Portfolio Website',
+    description: 'Interactive portfolio with motion-heavy UI, custom typography, and brand styling.',
+    site: 'https://github.com/sabithh/portfolio',
     src: '/images/project-5.png',
+  },
+  {
+    caption: 'No Cap Zone',
+    description: 'Web experience project with playful interaction patterns and custom page behavior.',
+    site: 'https://github.com/sabithh/no-cap-zone',
+    src: '/images/project-1.png',
+  },
+  {
+    caption: 'Badge',
+    description: 'Dart-based app experiment focused on structured UI and practical feature flow.',
+    site: 'https://github.com/sabithh/Badge',
+    src: '/images/project-2.png',
+  },
+  {
+    caption: 'Chestpiece Picker',
+    description: 'TypeScript project exploring guided selection logic and clean interaction design.',
+    site: 'https://github.com/sabithh/chestpiecepicker-',
+    src: '/images/project-3.png',
   },
 ]
 
@@ -50,6 +73,7 @@ const works = projects
             <AWork
               cssClass="s__scene__work s__scene__work--video js-work"
               caption={work.caption}
+              description={work.description}
               site={work.site}
               src={work.src}
               index={String(index).padStart(4, '0')}

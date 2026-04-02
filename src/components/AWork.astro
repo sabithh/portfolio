@@ -1,5 +1,5 @@
 ---
-const { caption, cssClass, index, site, src, total } = Astro.props
+const { caption, cssClass, description, index, site, src, total } = Astro.props
 
 // A random string with the syntax '[a-z][0-9]{3}-index-total'
 const key = Math.random().toString(36).slice(2, 6) + '-' + index + '/' + total
@@ -8,37 +8,15 @@ const key = Math.random().toString(36).slice(2, 6) + '-' + index + '/' + total
 <a-work class={cssClass}>
   <div class="a__inner">
     <a href={site} target="_blank" rel="noopener noreferrer">
-      {
-        src && src.endsWith('.mp4') ? (
-          <video
-            data-src={src}
-            class="a__video js-video"
-            loop
-            muted
-            playsinline
-            width="1082"
-            height="636"
-          />
-        ) : (
-          <img
-            src={src}
-            class="a__video js-video"
-            width="1082"
-            height="636"
-            alt={caption}
-            style="object-fit: cover;"
-          />
-        )
-      }
+      <div class="a__card">
+        <h3 class="a__title">{caption}</h3>
 
-      <div class="a__caption">
-        <div class="a__caption__text">
-          {caption}
-        </div><!-- .a__caption__text -->
+        <p class="a__description">{description}</p>
 
-        <div class="a__caption__key">
-          #{key}
-        </div><!-- .a__caption__key -->
+        <div class="a__meta">
+          <span class="a__key">#{key}</span>
+          <span class="a__cta">View on GitHub</span>
+        </div>
       </div><!-- .a__caption -->
     </a>
   </div><!-- .a__inner -->
@@ -159,33 +137,62 @@ const key = Math.random().toString(36).slice(2, 6) + '-' + index + '/' + total
     }
 
     .a__video {
-      display: block;
+      display: none;
+    }
 
-      width: auto;
-      max-width: 50vw;
-      height: auto;
-      max-height: 50vh;
+    .a__card {
+      @include flex(column, flex-start, flex-start);
+      gap: 0.85rem;
+
+      width: min(60vw, 34rem);
+      min-height: 15rem;
+      padding: 1.15rem;
+
+      background: color(primary);
+      border: 1px solid color(secondary);
 
       @include mq(phone) {
-        max-width: 80vw;
-        max-height: 80vh;
+        width: min(86vw, 24rem);
+        min-height: 13rem;
+        padding: 0.9rem;
       }
     }
 
-    .a__caption {
-      @include flex(row, center, space-between);
+    .a__title {
+      margin: 0;
+      color: color(secondary);
+      font: 700 clamp(1.5rem, 3.2vw, 2.35rem) / 0.95 font-family(bigger);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
 
-      padding: 0.5rem 0.5rem;
-
+    .a__description {
+      margin: 0;
       color: color(primary);
-      font: 700 11px / 1 font-family(fraktion);
-      letter-spacing: 0.15em;
-      text-align: right;
+      font: 500 13px / 1.5 font-family(fraktion);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
 
-      @include mq(phone) {
-        display: none;
-      }
+      color: color(secondary);
+      opacity: 0.8;
+    }
+
+    .a__meta {
+      @include flex(row, center, space-between);
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .a__key,
+    .a__cta {
+      color: color(secondary);
+      font: 700 11px / 1 font-family(fraktion);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .a__cta {
+      opacity: 0.75;
     }
 
     &.is-inview {

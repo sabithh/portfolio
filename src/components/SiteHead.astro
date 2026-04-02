@@ -117,7 +117,7 @@ const menu = [
           <span class="sb__text">Based in Malappuram, Kerala, India.</span>
         </span>
 
-        <span class="sb__line">
+        <span class="sb__line sb__line--cta">
           <span class="sb__text">
             Actively seeking Software / AI Internship opportunities →
           </span>
@@ -1283,6 +1283,9 @@ const menu = [
     }
 
     .sb-availability {
+      min-width: 0;
+      overflow: hidden;
+
       background: linear-gradient(
         0deg,
         transparent calc(50% - 1px),
@@ -1321,9 +1324,22 @@ const menu = [
       .sb__line {
         display: block;
         padding: 1px 1.25rem 0;
+
+        &--cta {
+          @include flex(row, center, flex-start);
+          gap: 0.35rem;
+          min-width: 0;
+          flex-wrap: wrap;
+        }
       }
 
       .sb__text {
+        @include mq(desktop-md) {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
         @include mq(phone) {
           display: none;
         }
@@ -1337,6 +1353,7 @@ const menu = [
         color: color(secondary);
         font-weight: 400;
         text-decoration: none;
+        white-space: nowrap;
 
         &:before {
           position: absolute;
