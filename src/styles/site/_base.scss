@@ -13,12 +13,13 @@
 }
 
 * {
-  outline: none;
   box-sizing: border-box;
 }
 
 html {
   @include t(base);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 
   background-color: color(secondary);
   scrollbar-width: none;
@@ -35,9 +36,39 @@ html {
 }
 
 body {
+  min-height: 100svh;
   background-color: color(primary);
   overflow-x: hidden;
   overflow-y: visible;
 
   font-family: inherit;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a,
+button,
+input,
+textarea,
+select,
+[role='button'] {
+  &:focus-visible {
+    outline: 2px solid color(secondary);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

@@ -19,22 +19,15 @@ const menu = [
   <div class="site-head__container">
     <div class="sb-logo">
       <a href="/">
-        <svg
+        <img
           class="js-logo"
+          src="/images/logo-ms.svg"
+          alt="Mohammed Sabith logo"
           width="280"
           height="280"
-          viewBox="0 0 280 280"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M240.245 0v263.2h-19.894V0h-39.756v263.2h-19.861V0h-39.755v280H280V0h-39.755Z"
-            fill="#160000"
-          >
-          </path>
-          <path d="M0 0v280h39.755V16.8H59.65V280h39.756V0H0Z" fill="#160000">
-          </path>
-        </svg>
+          loading="eager"
+          decoding="async"
+        />
 
         <span class="u-sr-only">Mohammed Sabith KM</span>
       </a>
@@ -44,6 +37,21 @@ const menu = [
       <div class="sb-console__inner js-console">
       </div><!-- .sb-console__inner -->
     </div><!-- .sb-console -->
+
+    <div class="sb-status">
+      <div class="sb-status__bot js-ai-bot" title="System Assistant">
+        <div class="bot-eyes">
+          <div class="bot-eye"><div class="bot-pupil js-pupil"></div></div>
+          <div class="bot-eye"><div class="bot-pupil js-pupil"></div></div>
+        </div>
+        <div class="bot-mouth js-mouth"></div>
+      </div>
+
+      <div class="sb-status__info">
+        <span class="sb-status__label">LOCAL TIME</span>
+        <span class="sb-status__val js-clock">00:00:00</span>
+      </div>
+    </div><!-- .sb-status -->
 
     <nav class="sb-menu">
       <ul class="sb__list">
@@ -59,9 +67,13 @@ const menu = [
       </ul>
     </nav><!-- .sb-menu -->
 
+    <div class="sb-snake-container" title="Click to play Snake (Arrow Keys)">
+      <canvas class="sb-status__snake js-snake-canvas" width="48" height="48" tabindex="0"></canvas>
+    </div>
+
     <ul class="sb-socials">
       <li class="sb__item">
-        <a href="https://github.com/sabithh" target="_blank" rel="noopener">
+        <a href="https://github.com/sabithh" target="_blank" rel="noopener noreferrer">
           <span
             class="sb__icon sb__icon--github"
             style="--path: path('M10 0C4.477 0 0 4.477 0 10c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.163 20 14.418 20 10c0-5.523-4.477-10-10-10z');"
@@ -76,7 +88,7 @@ const menu = [
         <a
           href="https://www.linkedin.com/in/mohammad-sabith-098a2a39b"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
         >
           <span
             class="sb__icon sb__icon--linkedin"
@@ -113,6 +125,7 @@ const menu = [
           <a
             href="https://vcard.link/card/I0PO"
             target="_blank"
+            rel="noopener noreferrer"
             class="sb__link"
           >
             Contact me
@@ -143,6 +156,11 @@ const menu = [
     contrastButton: HTMLElement
     console: HTMLElement
     contrastMask: HTMLElement
+    clock: HTMLElement
+    bot: HTMLElement
+    botPupils: NodeListOf<HTMLElement>
+    snakeCanvas: HTMLCanvasElement
+    ctx: CanvasRenderingContext2D
     links: NodeListOf<HTMLElement>
 
     messages: string[]
@@ -164,6 +182,15 @@ const menu = [
       this.console = document.querySelector('.js-console')
       this.contrastMask = document.querySelector('.js-contrast-mask')
       this.links = this.el.querySelectorAll('.js-menu-link')
+      this.clock = this.el.querySelector('.js-clock')
+      this.bot = this.el.querySelector('.js-ai-bot')
+      this.botPupils = this.el.querySelectorAll('.js-pupil')
+      this.snakeCanvas = this.el.querySelector('.js-snake-canvas')
+
+      if (this.snakeCanvas) {
+        this.ctx = this.snakeCanvas.getContext('2d')
+        this.initSnake()
+      }
 
       // Properties
       this.messages = [
@@ -251,6 +278,196 @@ const menu = [
      */
     init() {
       this.bindEvents()
+      this.updateClock()
+      setInterval(this.updateClock.bind(this), 1000)
+    }
+
+    /**
+     * Initialize Snake Game
+     */
+    initSnake() {
+      // @ts-ignore
+      this.snakeGrid = 4;
+      // @ts-ignore
+      this.snakeCols = 12; // default
+      // @ts-ignore
+      this.snakeRows = 12; // default
+
+      // @ts-ignore
+      this.snakeData = [{x: 6, y: 6}];
+      // @ts-ignore
+      this.foodData = {x: 3, y: 3};
+      // @ts-ignore
+      this.snakeDx = 1;
+      // @ts-ignore
+      this.snakeDy = 0;
+      // @ts-ignore
+      this.lastSnakeTime = 0;
+      // @ts-ignore
+      this.isGameOver = false;
+      // @ts-ignore
+      this.hasStartedPlaying = false;
+
+      // Handle dynamic stretching of the canvas container
+      const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+          const w = Math.floor(entry.contentRect.width);
+          const h = Math.floor(entry.contentRect.height);
+          this.snakeCanvas.width = w;
+          this.snakeCanvas.height = h;
+          // @ts-ignore
+          this.snakeCols = Math.floor(w / this.snakeGrid);
+          // @ts-ignore
+          this.snakeRows = Math.floor(h / this.snakeGrid);
+
+          // prevent out of bounds when resizing smaller
+          // @ts-ignore
+          if (this.foodData.x >= this.snakeCols) this.foodData.x = this.snakeCols - 1;
+          // @ts-ignore
+          if (this.foodData.y >= this.snakeRows) this.foodData.y = this.snakeRows - 1;
+        }
+      });
+      // @ts-ignore
+      resizeObserver.observe(this.snakeCanvas.parentElement);
+
+      this.snakeCanvas.addEventListener('keydown', (e) => {
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+          e.preventDefault();
+          // @ts-ignore
+          this.hasStartedPlaying = true;
+          // @ts-ignore
+          if (e.key === 'ArrowUp' && this.snakeDy === 0) { this.snakeDx = 0; this.snakeDy = -1; }
+          // @ts-ignore
+          else if (e.key === 'ArrowDown' && this.snakeDy === 0) { this.snakeDx = 0; this.snakeDy = 1; }
+          // @ts-ignore
+          else if (e.key === 'ArrowLeft' && this.snakeDx === 0) { this.snakeDx = -1; this.snakeDy = 0; }
+          // @ts-ignore
+          else if (e.key === 'ArrowRight' && this.snakeDx === 0) { this.snakeDx = 1; this.snakeDy = 0; }
+        }
+      });
+
+      this.snakeCanvas.addEventListener('click', () => {
+        // @ts-ignore
+        if (this.isGameOver) {
+          // @ts-ignore
+          this.snakeData = [{x: Math.floor(this.snakeCols/2), y: Math.floor(this.snakeRows/2)}];
+          // @ts-ignore
+          this.snakeDx = 1; this.snakeDy = 0;
+          // @ts-ignore
+          this.isGameOver = false;
+        }
+      });
+
+      requestAnimationFrame(this.snakeLoop.bind(this));
+    }
+
+    snakeLoop(time: number) {
+      if (!this.snakeCanvas) return;
+      requestAnimationFrame(this.snakeLoop.bind(this));
+
+      // @ts-ignore
+      if (time - this.lastSnakeTime < 80) return;
+      // @ts-ignore
+      this.lastSnakeTime = time;
+
+      // @ts-ignore
+      if (this.isGameOver) {
+        // Blink if game over
+        // @ts-ignore
+        if (Math.floor(time / 500) % 2 === 0) {
+          this.drawSnake();
+        } else {
+          this.ctx.clearRect(0, 0, this.snakeCanvas.width, this.snakeCanvas.height);
+        }
+        return;
+      }
+
+      // Automatically move if not started randomly maybe? 
+      // User requested "JUST SIMPLY RUNNING AROUND"
+      // @ts-ignore
+      if (!this.hasStartedPlaying) {
+        // Simple AI to wander around
+        if (Math.random() < 0.1) {
+          // @ts-ignore
+          const dirs = [{dx: 0, dy: -1}, {dx: 0, dy: 1}, {dx: -1, dy: 0}, {dx: 1, dy: 0}];
+          // @ts-ignore
+          const validDirs = dirs.filter(d => !(d.dx === -this.snakeDx && d.dy === -this.snakeDy));
+          const next = validDirs[Math.floor(Math.random() * validDirs.length)];
+          // @ts-ignore
+          this.snakeDx = next.dx; this.snakeDy = next.dy;
+        }
+      }
+
+      // @ts-ignore
+      const head = { x: this.snakeData[0].x + this.snakeDx, y: this.snakeData[0].y + this.snakeDy };
+
+      // @ts-ignore
+      if (head.x < 0) head.x = this.snakeCols - 1;
+      // @ts-ignore
+      else if (head.x >= this.snakeCols) head.x = 0;
+      // @ts-ignore
+      if (head.y < 0) head.y = this.snakeRows - 1;
+      // @ts-ignore
+      else if (head.y >= this.snakeRows) head.y = 0;
+
+      let collided = false;
+      // @ts-ignore
+      for (let i = 0; i < this.snakeData.length; i++) {
+        // @ts-ignore
+        if (this.snakeData[i].x === head.x && this.snakeData[i].y === head.y) {
+          collided = true;
+          break;
+        }
+      }
+      if (collided) {
+        // @ts-ignore
+        this.isGameOver = true;
+        return;
+      }
+
+      // @ts-ignore
+      this.snakeData.unshift(head);
+
+      // @ts-ignore
+      if (head.x === this.foodData.x && head.y === this.foodData.y) {
+        // @ts-ignore
+        this.foodData = { x: Math.floor(Math.random() * this.snakeCols), y: Math.floor(Math.random() * this.snakeRows) };
+      } else {
+        // @ts-ignore
+        this.snakeData.pop();
+      }
+
+      this.drawSnake();
+    }
+
+    drawSnake() {
+      if (!this.ctx || !this.snakeCanvas) return;
+      this.ctx.clearRect(0, 0, this.snakeCanvas.width, this.snakeCanvas.height);
+      
+      // Ensures the color dynamically fully matches the text color of the current theme
+      const liveColor = getComputedStyle(this.snakeCanvas).color || '#000';
+      this.ctx.fillStyle = liveColor;
+      
+      // @ts-ignore
+      this.ctx.fillRect(this.foodData.x * this.snakeGrid, this.foodData.y * this.snakeGrid, this.snakeGrid, this.snakeGrid);
+
+      // @ts-ignore
+      for (const segment of this.snakeData) {
+        // @ts-ignore
+        this.ctx.fillRect(segment.x * this.snakeGrid, segment.y * this.snakeGrid, this.snakeGrid, this.snakeGrid);
+      }
+    }
+
+    /**
+     * Update clock
+     */
+    updateClock() {
+      if (!this.clock) return
+      const now = new Date()
+      const hours = String(now.getHours()).padStart(2, '0')
+      const minutes = String(now.getMinutes()).padStart(2, '0')
+      const seconds = String(now.getSeconds()).padStart(2, '0')
+      this.clock.textContent = `${hours}:${minutes}:${seconds}`
     }
 
     /**
@@ -268,10 +485,65 @@ const menu = [
       })
 
       document.addEventListener('intro', this.intro.bind(this), { once: true })
+      document.addEventListener('mousemove', this.onMouseMove.bind(this), { passive: true })
+
+      if (this.bot) {
+        this.bot.addEventListener('click', this.onBotClick.bind(this))
+      }
 
       this.el.addEventListener('intersect', this.onIntersect.bind(this), {
         passive: true,
       })
+    }
+
+    /**
+     * Mouse tracking for bot eyes
+     */
+    onMouseMove(e) {
+      if (!this.botPupils || this.botPupils.length === 0) return
+      
+      const mouseX = e.clientX
+      const mouseY = e.clientY
+
+      this.botPupils.forEach((pupil: HTMLElement) => {
+        const eye = pupil.parentElement
+        if (!eye) return
+        
+        const rect = eye.getBoundingClientRect()
+        const eyeCenterX = rect.left + rect.width / 2
+        const eyeCenterY = rect.top + rect.height / 2
+
+        const maxMoveX = (rect.width - 4) / 2 // 4 is pupil width
+        const maxMoveY = (rect.height - 4) / 2
+
+        const dx = mouseX - eyeCenterX
+        const dy = mouseY - eyeCenterY
+
+        let moveX = (dx / window.innerWidth) * maxMoveX * 4
+        let moveY = (dy / window.innerHeight) * maxMoveY * 4
+
+        if (moveX > maxMoveX) moveX = maxMoveX
+        if (moveX < -maxMoveX) moveX = -maxMoveX
+        if (moveY > maxMoveY) moveY = maxMoveY
+        if (moveY < -maxMoveY) moveY = -maxMoveY
+
+        pupil.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`
+      })
+    }
+
+    /**
+     * Bot interaction mode toggle
+     */
+    onBotClick() {
+      if (!this.bot) return
+      const modes = ['', 'is-happy', 'is-sleeping', 'is-hacking']
+      let curr = 0
+      modes.forEach((m, idx) => {
+        if (m && this.bot.classList.contains(m)) curr = idx
+      })
+      if (modes[curr]) this.bot.classList.remove(modes[curr])
+      curr = (curr + 1) % modes.length
+      if (modes[curr]) this.bot.classList.add(modes[curr])
     }
 
     /**
@@ -498,7 +770,7 @@ const menu = [
     }
 
     .sb-logo {
-      padding: 1.5rem;
+      padding: 1.4rem;
       width: 6rem;
       height: 6rem;
 
@@ -514,13 +786,14 @@ const menu = [
         height: 4rem;
       }
 
-      svg {
-        width: 3rem;
-        height: 3rem;
+      .js-logo {
+        display: block;
+        width: 3.2rem;
+        height: 3.2rem;
 
         @include mq(phone) {
-          width: 1.875rem;
-          height: 1.875rem;
+          width: 2rem;
+          height: 2rem;
         }
       }
     }
@@ -528,7 +801,7 @@ const menu = [
     .sb-console {
       @include flex(column, flex-start, flex-end);
 
-      margin: 0 auto 0 0;
+      margin: 0;
       padding: 1.5rem;
 
       font: 400 8px / 1.4 font-family(fraktion);
@@ -563,8 +836,162 @@ const menu = [
       }
     }
 
-    .sb-menu {
+    .sb-status {
+      @include flex(row, center, center);
+      gap: 1.5rem;
+
+      margin: 0;
+      padding: 0 1.5rem;
       border-left: 1px solid color(secondary);
+      border-right: 1px solid color(secondary);
+
+      font: 400 9px / 1.4 font-family(fraktion);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+
+      @include mq(desktop-sm) {
+        display: none;
+      }
+
+      &__bot {
+        @include flex(column, center, center);
+        gap: 6px;
+        width: 48px;
+        height: 48px;
+        border: 1px solid color(secondary);
+        background: color(secondary);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        .bot-eyes {
+          @include flex(row, center, center);
+          gap: 6px;
+        }
+
+        .bot-eye {
+          width: 12px;
+          height: 14px;
+          background: color(primary);
+          border-radius: 5px;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.2s;
+        }
+
+        .bot-pupil {
+          width: 4px;
+          height: 4px;
+          background: color(secondary);
+          border-radius: 50%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          transition: height 0.1s;
+        }
+
+        .bot-mouth {
+          width: 16px;
+          height: 3px;
+          background: color(primary);
+          border-radius: 2px;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        // --- Interaction Modes ---
+        &.is-happy {
+          .bot-mouth {
+            height: 8px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+          }
+        }
+        &.is-sleeping {
+          .bot-eye { height: 4px; border-radius: 2px; }
+          .bot-pupil { opacity: 0; }
+        }
+        &.is-hacking {
+          background: color(primary);
+          .bot-eye, .bot-mouth { background: color(secondary); }
+          .bot-pupil { background: color(primary); height: 8px; }
+        }
+      }
+
+      &__info {
+        @include flex(column, flex-start, flex-start);
+      }
+
+      &__label {
+        opacity: 0.5;
+        font-size: 7px;
+      }
+
+      &__val {
+        font-weight: 700;
+        min-width: 4rem;
+        text-align: left;
+      }
+
+      @keyframes status-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.2; }
+      }
+    }
+
+    .sb-snake-container {
+      @include flex(row, center, center);
+      height: 100%;
+      border-right: 1px solid color(secondary);
+      padding: 0;
+      flex: 0 1 22rem;
+      width: 22rem;
+      min-width: 12rem;
+
+      @include mq(desktop-md) {
+        flex-basis: 16rem;
+        width: 16rem;
+        min-width: 10rem;
+      }
+
+      @include mq(desktop-sm) {
+        flex-basis: 13rem;
+        width: 13rem;
+        min-width: 8rem;
+      }
+      
+      @include mq(tablet) {
+        display: none;
+      }
+
+      .sb-status__snake {
+        cursor: pointer;
+        outline: none;
+        image-rendering: auto;
+        border: none;
+        background: color(primary);
+        border-radius: 0;
+        width: 100%;
+        height: 100%;
+
+        &:focus {
+          box-shadow: inset 0 0 0 2px color(tertiary); /* Inner highlight active */
+        }
+      }
+    }
+
+    .sb-menu {
+      flex: 1 1 auto;
+      min-width: 0;
+      border-right: 1px solid color(secondary);
+
+      @include mq(desktop-sm) {
+        border-left: 1px solid color(secondary);
+      }
 
       @include mq(desktop-xs) {
         padding: 0 1rem;
@@ -575,11 +1002,12 @@ const menu = [
       }
 
       .sb__list {
-        @include flex(row, center, flex-start);
+        @include flex(row, center, center);
 
         margin: 0;
         padding: 0;
         height: 100%;
+        width: 100%;
 
         list-style: none;
       }
@@ -652,6 +1080,7 @@ const menu = [
     }
 
     .sb-socials {
+      @include flex(column, center, center);
       margin: 0;
       padding: 0;
 
@@ -714,12 +1143,14 @@ const menu = [
           content: '';
         }
 
-        &--codepen {
+        &--github {
+          display: block;
           width: 20px;
-          height: 19px;
+          height: 20px;
         }
 
         &--linkedin {
+          display: block;
           width: 16px;
           height: 15px;
         }

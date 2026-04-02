@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Mohammed Sabith logo mark</title>
+  <desc id="desc">Vertical bar logo with a curved S shape carved in negative space.</desc>
+
+  <defs>
+    <mask id="s-cutout-mask">
+      <rect x="0" y="0" width="60" height="80" fill="#fff"/>
+      <path
+        d="M46 12 C37 8, 26 10, 21 19 C17 27, 22 33, 31 36 C40 39, 45 43, 42 49 C39 55, 33 57, 25 64 C23 66, 22 67, 22 69"
+        fill="none"
+        stroke="#000"
+        stroke-width="7"
+        stroke-linecap="butt"
+        stroke-linejoin="round"
+      />
+    </mask>
+  </defs>
+
+  <g transform="translate(7 0) scale(1.9 1.6)" fill="#1a1600" mask="url(#s-cutout-mask)">
+    <rect x="0" y="0" width="10" height="80"/>
+    <rect x="14" y="0" width="8" height="80"/>
+    <rect x="26" y="0" width="8" height="80"/>
+    <rect x="38" y="0" width="8" height="80"/>
+    <rect x="50" y="0" width="10" height="80"/>
+  </g>
+</svg>

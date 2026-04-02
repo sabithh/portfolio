@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Mohammed Sabith S logo draft</title>
+  <desc id="desc">Single-letter S logo in a rigid geometric style.</desc>
+  <rect width="128" height="128" fill="#f3efe1"/>
+  <rect x="1" y="1" width="126" height="126" fill="none" stroke="#1a1600" stroke-width="2"/>
+
+  <g transform="translate(34 28)" fill="#1a1600">
+    <rect x="0" y="0" width="60" height="8"/>
+    <rect x="52" y="8" width="8" height="24"/>
+    <rect x="0" y="32" width="60" height="8"/>
+    <rect x="0" y="40" width="8" height="24"/>
+    <rect x="0" y="64" width="60" height="8"/>
+
+    <rect x="8" y="8" width="44" height="8" fill="#f3efe1"/>
+    <rect x="8" y="56" width="44" height="8" fill="#f3efe1"/>
+  </g>
+</svg>

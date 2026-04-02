@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Mohammed Sabith logo draft 01</title>
+  <desc id="desc">Bar-style MS monogram inside a square frame.</desc>
+  <rect width="128" height="128" fill="#f3efe1"/>
+  <rect x="1" y="1" width="126" height="126" fill="none" stroke="#1a1600" stroke-width="2"/>
+
+  <g fill="#1a1600" transform="translate(28 42)">
+    <rect x="0" y="0" width="6" height="44"/>
+    <rect x="10" y="0" width="6" height="44"/>
+    <rect x="20" y="10" width="6" height="34"/>
+    <rect x="30" y="0" width="6" height="44"/>
+
+    <rect x="46" y="0" width="26" height="6"/>
+    <rect x="46" y="19" width="26" height="6"/>
+    <rect x="46" y="38" width="26" height="6"/>
+    <rect x="46" y="0" width="6" height="25"/>
+    <rect x="66" y="19" width="6" height="25"/>
+  </g>
+</svg>

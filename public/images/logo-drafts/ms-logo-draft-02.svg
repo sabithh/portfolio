@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Mohammed Sabith logo draft 02</title>
+  <desc id="desc">Abstract vertical bar mark with negative cuts suggesting MS.</desc>
+  <rect width="128" height="128" fill="#f3efe1"/>
+  <rect x="1" y="1" width="126" height="126" fill="none" stroke="#1a1600" stroke-width="2"/>
+
+  <g transform="translate(38 35)">
+    <rect x="0" y="0" width="6" height="58" fill="#1a1600"/>
+    <rect x="10" y="0" width="6" height="58" fill="#1a1600"/>
+    <rect x="20" y="0" width="6" height="58" fill="#1a1600"/>
+    <rect x="30" y="0" width="6" height="58" fill="#1a1600"/>
+    <rect x="40" y="0" width="6" height="58" fill="#1a1600"/>
+
+    <rect x="10" y="10" width="20" height="8" fill="#f3efe1"/>
+    <rect x="10" y="30" width="20" height="8" fill="#f3efe1"/>
+  </g>
+</svg>

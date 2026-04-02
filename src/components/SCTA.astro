@@ -37,7 +37,7 @@ const lines = [
             </div>
           ))
         }
-        <a href="mailto:mxsabith17@gmail.com" class="s__cta__link">
+        <a href="mailto:mxsabith17@gmail.com" class="s__cta__link s__cta__link--email">
           mxsabith17@gmail.com
         </a>
         <a href="tel:+917994235150" class="s__cta__link s__cta__link--phone">
@@ -794,6 +794,8 @@ const lines = [
         letter-spacing: 0.1em;
         text-decoration: none;
         text-transform: uppercase;
+        white-space: nowrap;
+        max-width: calc(100% - 2rem);
 
         transition:
           transform 0s linear 0.3s,
@@ -807,6 +809,17 @@ const lines = [
           padding: 1em;
 
           font-size: 13px;
+        }
+
+        @include mq(phone-sm) {
+          width: calc(100% - 1rem);
+          max-width: calc(100% - 1rem);
+          padding: 0.9em;
+
+          white-space: normal;
+          overflow-wrap: anywhere;
+          text-align: center;
+          letter-spacing: 0.06em;
         }
 
         &:before {
@@ -838,11 +851,19 @@ const lines = [
         }
       }
 
-      &__link--phone {
-        top: calc(50% + var(--size) * 0.43);
+      &__link--email {
+        top: calc(50% - var(--size) * 0.35);
 
         @include mq(phone) {
-          top: calc(50% + var(--size) * 0.38);
+          top: calc(50% - var(--size) * 0.29);
+        }
+      }
+
+      &__link--phone {
+        top: calc(50% + var(--size) * 0.36);
+
+        @include mq(phone) {
+          top: calc(50% + var(--size) * 0.28);
         }
       }
 

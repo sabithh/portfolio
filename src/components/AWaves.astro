@@ -3,6 +3,18 @@ const { class: className } = Astro.props
 ---
 
 <a-waves class:list={className} data-intersect>
+  <div class="a__face-layer js-face-layer" aria-hidden="true">
+    <img
+      class="a__face js-face"
+      src="/images/profile-sketch.png"
+      alt=""
+      width="1024"
+      height="1024"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+
   <svg class="js-svg"></svg>
 </a-waves><!-- .a-waves -->
 
@@ -357,6 +369,11 @@ const { class: className } = Astro.props
       this.style.setProperty('--x', `${mouse.sx}px`)
       this.style.setProperty('--y', `${mouse.sy}px`)
 
+      const faceX = ((mouse.sx / this.bounding.width) - 0.5) * 22
+      const faceY = ((mouse.sy / this.bounding.height) - 0.5) * 16
+      this.style.setProperty('--face-x', `${Math.round(faceX * 10) / 10}px`)
+      this.style.setProperty('--face-y', `${Math.round(faceY * 10) / 10}px`)
+
       this.movePoints(time)
       this.drawLines()
     }
@@ -369,6 +386,8 @@ const { class: className } = Astro.props
   a-waves {
     --x: -0.5rem;
     --y: 50%;
+    --face-x: 0px;
+    --face-y: 0px;
 
     position: relative;
 
@@ -377,10 +396,69 @@ const { class: className } = Astro.props
 
     overflow: hidden;
 
+    .a__face-layer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+
+      width: min(48vh, 34vw, 28rem);
+      aspect-ratio: 1 / 1;
+
+      transform: translate3d(calc(-50% + var(--face-x)), calc(-50% + var(--face-y)), 0);
+      will-change: transform;
+
+      pointer-events: none;
+
+      @include mq(tablet) {
+        width: min(54vw, 18rem);
+      }
+
+      @include mq(phone) {
+        width: min(58vw, 15rem);
+      }
+    }
+
+    .a__face {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+      object-fit: contain;
+
+      mix-blend-mode: multiply;
+      opacity: 0.52;
+      filter: grayscale(1) contrast(1.12) brightness(0.92);
+
+      -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 44%, transparent 72%);
+      mask-image: radial-gradient(circle at 50% 48%, #000 44%, transparent 72%);
+
+      animation: a-face-float 10s ease-in-out infinite;
+
+      @include mq(phone) {
+        opacity: 0.46;
+      }
+    }
+
+    @keyframes a-face-float {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate3d(0, -1.25%, 0) scale(1.02);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
     &:before {
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 3;
 
       width: 0.5rem;
       height: 0.5rem;
@@ -396,6 +474,9 @@ const { class: className } = Astro.props
     }
 
     svg {
+      position: relative;
+      z-index: 2;
+
       display: block;
 
       width: 100%;

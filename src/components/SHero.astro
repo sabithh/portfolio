@@ -24,6 +24,12 @@ import ASeparator from './ASeparator.astro'
       <span class="s__title__word js-word">Sabith</span>
     </h1>
 
+    <h2 class="s__subtitle">
+      <span class="s__title__word js-word">THE</span>
+      <span class="s__title__word js-word">AI</span>
+      <span class="s__title__word js-word">DEVELOPER</span>
+    </h2>
+
     <ASeparator
       class="s__separator js-separator"
       strings={['AI', 'Engineer', '•', 'Fullstack', 'Developer', '•', 'Data', 'Scientist']}
@@ -120,6 +126,7 @@ import ASeparator from './ASeparator.astro'
     intro() {
       const waves = this.el.querySelector('a-waves')
       const lines = waves.querySelectorAll('.js-line')
+      const faceLayer = waves.querySelector('.js-face-layer')
       const content = this.el.querySelector('.js-content')
       const border = this.el.querySelector('.js-border')
       const chars = content.querySelectorAll('.char__inner')
@@ -182,6 +189,25 @@ import ASeparator from './ASeparator.astro'
         },
         0,
       )
+
+      if (faceLayer) {
+        tl.fromTo(
+          faceLayer,
+          {
+            opacity: 0,
+            scale: 0.84,
+            yPercent: 8,
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            yPercent: 0,
+            duration: 1.5,
+            ease: 'expo.out',
+          },
+          0.55,
+        )
+      }
 
       tl.fromTo(
         content,
@@ -375,9 +401,28 @@ import ASeparator from './ASeparator.astro'
     }
 
     .s__title,
+    .s__subtitle,
     .s__separator {
       flex-grow: 0;
       flex-shrink: 0;
+    }
+
+    .s__subtitle {
+      @extend .s__title;
+      gap: 1.5rem;
+      padding: 0 0 2.5rem 0;
+      font: 400 min(3.5vw, 4rem) / 1 font-family(fraktion);
+      letter-spacing: 0.1em;
+
+      @include mq(tablet) {
+        padding: 0 1rem 1.5rem;
+        gap: 1rem;
+        font-size: calc(6vw - 0.5rem);
+      }
+      
+      @include mq(phone) {
+        font-size: calc(7vw - 0.5rem);
+      }
     }
 
     .s__title {
