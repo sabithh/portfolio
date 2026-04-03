@@ -1,8 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Mohammed Sabith S inside mark draft</title>
-  <desc id="desc">Vertical bar logo with a curved S shape carved in negative space.</desc>
-  <rect width="128" height="128" fill="#f3efe1"/>
-  <rect x="1" y="1" width="126" height="126" fill="none" stroke="#1a1600" stroke-width="2"/>
+  <title id="title">Mohammed Sabith S favicon</title>
+  <desc id="desc">S logo mark optimized for tab icon use.</desc>
 
   <defs>
     <mask id="s-cutout-mask">
@@ -18,7 +16,7 @@
     </mask>
   </defs>
 
-  <g transform="translate(34 24)" fill="#1a1600" mask="url(#s-cutout-mask)">
+  <g transform="scale(2.1333333333 1.6)" fill="#1a1600" mask="url(#s-cutout-mask)">
     <rect x="0" y="0" width="10" height="80"/>
     <rect x="14" y="0" width="8" height="80"/>
     <rect x="26" y="0" width="8" height="80"/>
