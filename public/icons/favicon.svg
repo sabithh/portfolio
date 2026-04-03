@@ -1,4 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#FFEF5F"/>
-  <path d="M256 448l-30-30C118 318 48 250 48 166c0-68 52-122 122-122 40 0 76 20 100 48 24-28 60-48 100-48 70 0 122 54 122 122 0 84-70 152-178 252l-30 30z" fill="#1a1600"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Mohammed Sabith S inside mark draft</title>
+  <desc id="desc">Vertical bar logo with a curved S shape carved in negative space.</desc>
+  <rect width="128" height="128" fill="#f3efe1"/>
+  <rect x="1" y="1" width="126" height="126" fill="none" stroke="#1a1600" stroke-width="2"/>
+
+  <defs>
+    <mask id="s-cutout-mask">
+      <rect x="0" y="0" width="60" height="80" fill="#fff"/>
+      <path
+        d="M46 12 C37 8, 26 10, 21 19 C17 27, 22 33, 31 36 C40 39, 45 43, 42 49 C39 55, 33 57, 25 64 C23 66, 22 67, 22 69"
+        fill="none"
+        stroke="#000"
+        stroke-width="7"
+        stroke-linecap="butt"
+        stroke-linejoin="round"
+      />
+    </mask>
+  </defs>
+
+  <g transform="translate(34 24)" fill="#1a1600" mask="url(#s-cutout-mask)">
+    <rect x="0" y="0" width="10" height="80"/>
+    <rect x="14" y="0" width="8" height="80"/>
+    <rect x="26" y="0" width="8" height="80"/>
+    <rect x="38" y="0" width="8" height="80"/>
+    <rect x="50" y="0" width="10" height="80"/>
+  </g>
 </svg>
