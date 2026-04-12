@@ -1,16 +1,6 @@
-# Antoine Wodniack – Portfolio (Open Source Edition)
+# Mohammed Sabith KM – Portfolio
 
-Welcome to the public source of my personal portfolio – [wodniack.dev](https://wodniack.dev), built with [Astro](https://astro.build).
-
-This project performed far beyond my expectations and brought an overwhelming amount of positive feedback.
-Thanks for the love. ❤️
-
-I said that if I won a Webby, I’d open-source it. Mission accomplished. 🥳
-
-I’m open-sourcing it so that junior developers, curious minds, and future portfolio crafters can **learn from real-world code**, understand how things are built, and get inspired to build their own.
-
-🚫 **Don't copy/paste it as-is and call it yours.** The community will notice, and you’ll doom yourself to eternal mediocrity.
-✅ **Do explore, dissect, and adapt it with purpose.**
+Welcome to the public source of my personal portfolio – [sabith.me](https://sabith.me), built with [Astro](https://astro.build).
 
 ---
 
@@ -20,8 +10,8 @@ To run the project locally:
 
 ```bash
 # 1. Clone this repo
-git clone https://github.com/AntoineW/AW-2025-Portfolio.git
-cd wodniack-portfolio
+git clone https://github.com/sabithh/My-Portfolio.git
+cd My-Portfolio
 
 # 2. Install dependencies
 npm install
